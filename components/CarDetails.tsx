@@ -29,7 +29,7 @@ const formSchema = z.object({
 	registration: z.string().min(2, {
 		message: "Registration number must be at least 2 characters.",
 	}),
-	purchased: z.boolean(),
+	purchased: z.string(),
 	purchaseDate: z.string().optional(),
 	value: z.number(),
 	usage: z.string(),
@@ -96,11 +96,14 @@ export function CarDetailsForm() {
 				<FormField
 					control={form.control}
 					name="purchased"
-					render={({ }) => (
+					render={({ field }) => (
 						<FormItem>
 							<FormLabel className="text-xl">Has the car been purchased yet?</FormLabel>
 							<FormControl>
-								<ToggleGroup type="single" size="lg" variant={"outline"} onValueChange={(value) => value === "true" ? setPurchaseDateVisible(true) : setPurchaseDateVisible(false)}>
+								<ToggleGroup type="single" size="lg" variant={"outline"} onValueChange={(value) => {
+									field.onChange(value)
+									setPurchaseDateVisible(value === "true")
+								}}>
 									<ToggleGroupItem value="true">Yes</ToggleGroupItem>
 									<ToggleGroupItem value="false">No</ToggleGroupItem>
 								</ToggleGroup>
