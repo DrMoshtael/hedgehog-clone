@@ -24,11 +24,6 @@ import {
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon, InfoIcon } from "lucide-react"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 
 const formSchema = z.object({
 	registration: z.string().min(2, {
@@ -45,6 +40,7 @@ export function CarDetailsForm() {
 	const [purchaseDate, setPurchaseDate] = useState(new Date())
 	const [purchaseDatePopoverOpen, setPurchaseDatePopoverOpen] = useState(false)
 	const [purchaseDateVisible, setPurchaseDateVisible] = useState(false)
+	const [tooltipOpen, setTooltipOpen] = useState(false)
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -64,18 +60,34 @@ export function CarDetailsForm() {
 						<FormItem>
 							<div className="flex flex-row justify-between">
 								<FormLabel className="text-xl">Car registration</FormLabel>
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<InfoIcon />
-									</TooltipTrigger>
-									<TooltipContent className="max-w-sm">
-										If you enter your registration, we&apos;ll use it to look up the car details for you. If you don&apos;t know it, or the car details don&apos;t appear, leave this question blank and click on the &quot;Don&apos;t know your registration?&quot; link. However we will need the registration eventually to sell you a policy.
-									</TooltipContent>
-								</Tooltip>
-								
+								<Popover open={tooltipOpen} onOpenChange={setTooltipOpen}>
+									<PopoverTrigger asChild>
+										<Button
+											variant={"ghost"}
+											onClick={() => setTooltipOpen(!tooltipOpen)}
+											onMouseEnter={() => setTooltipOpen(true)}
+											onMouseLeave={() => setTooltipOpen(false)}
+										>
+											<InfoIcon className="p-0 h-full w-full" />
+										</Button>
+									</PopoverTrigger>
+									<PopoverContent
+										className="md:max-w-sm max-w-2xs bg-green-500 items-center justify-center"
+										onMouseEnter={() => setTooltipOpen(true)}
+										onMouseLeave={() => setTooltipOpen(false)}
+										sideOffset={0}
+									>
+										<p className="p-2 text-sm text-white">
+											If you enter your registration, we&apos;ll use it to look up the car details for you. If you don&apos;t know it, or the car details don&apos;t appear, leave this question blank and click on the &quot;Don&apos;t know your registration?&quot; link. However we will need the registration eventually to sell you a policy.
+										</p>
+									</PopoverContent>
+								</Popover>
 							</div>
 							<FormControl>
-								<Input placeholder="Enter car registration" {...field} />
+								<div className="flex flex-row">
+
+									<Input placeholder="Enter car registration" {...field} />
+								</div>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -84,7 +96,7 @@ export function CarDetailsForm() {
 				<FormField
 					control={form.control}
 					name="purchased"
-					render={({  }) => (
+					render={({ }) => (
 						<FormItem>
 							<FormLabel className="text-xl">Has the car been purchased yet?</FormLabel>
 							<FormControl>
@@ -99,7 +111,7 @@ export function CarDetailsForm() {
 				{purchaseDateVisible && <FormField
 					control={form.control}
 					name="purchaseDate"
-					render={({  }) => (
+					render={({ }) => (
 						<FormItem>
 							<FormLabel className="text-xl">When was the car purchased?</FormLabel>
 							<FormControl>
