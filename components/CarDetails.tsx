@@ -115,7 +115,7 @@ export function CarDetailsForm() {
 						<FormItem>
 							<FormLabel className="text-xl">When was the car purchased?</FormLabel>
 							<FormControl>
-								<Popover open={purchaseDatePopoverOpen}>
+								<Popover open={purchaseDatePopoverOpen} onOpenChange={setPurchaseDatePopoverOpen}>
 									<PopoverTrigger asChild>
 										<Button variant={"outline"}
 											className={cn(
