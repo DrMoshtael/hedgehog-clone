@@ -30,13 +30,7 @@ export function MainAccordion() {
         <AccordionTrigger className="text-4xl">Driver details</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
           <p>
-            We offer worldwide shipping through trusted courier partners.
-            Standard delivery takes 3-5 business days, while express shipping
-            ensures delivery within 1-2 business days.
-          </p>
-          <p>
-            All orders are carefully packaged and fully insured. Track your
-            shipment in real-time through our dedicated tracking portal.
+            Next section here
           </p>
         </AccordionContent>
       </AccordionItem>
@@ -44,14 +38,7 @@ export function MainAccordion() {
         <AccordionTrigger className="text-4xl">Other details</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 text-balance">
           <p>
-            We stand behind our products with a comprehensive 30-day return
-            policy. If you&apos;re not completely satisfied, simply return the
-            item in its original condition.
-          </p>
-          <p>
-            Our hassle-free return process includes free return shipping and
-            full refunds processed within 48 hours of receiving the returned
-            item.
+            Final section here
           </p>
         </AccordionContent>
       </AccordionItem>
